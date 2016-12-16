@@ -12,7 +12,12 @@
   <br><br><br>
   <p>Before I die I want to..</p>
   <div class="container">
-    <!-- <div class="row" ng-repeat="item in items"></div> -->
+    <div class="row" ng-repeat="item in items">
+      <p ng-if="item.done">
+        <input type="checkbox" ng-disabled="(item.taguser !== loggedinuser)" ng-model="newObject[item._id]" ng-change="toggle(item._id)" checked>
+        <span>{{item.taguser}} | {{item.title}} - {{item.description}} - {{item.createdAt}}</span>
+      </p>
+    </div>
   </div>
   <br>
   <p>List of other users (Click to view profile):</p>

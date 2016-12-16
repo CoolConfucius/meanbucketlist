@@ -7,7 +7,7 @@
     <p>Done</p>
     <div class="row" ng-repeat="item in profileuser._items">
       <p ng-if="item.done">
-        <input type="checkbox" ng-model="newObject[item._id]" ng-change="toggle(item._id)" checked>
+        <input type="checkbox" ng-disabled="(!sameuser || item.taguser !== loggedinuser)" ng-model="newObject[item._id]" ng-change="toggle(item._id)" checked>
         <span>{{item.taguser}} | {{item.title}} - {{item.description}} - {{item.createdAt}}</span>
       </p>
     </div>
@@ -17,7 +17,7 @@
     <p>Pending</p>
     <div class="row" ng-repeat="item in profileuser._items">
       <p ng-if="!item.done">
-        <input type="checkbox" ng-model="newObject[item._id]" ng-change="toggle(item._id)">
+        <input type="checkbox" ng-disabled="(!sameuser || item.taguser !== loggedinuser)" ng-model="newObject[item._id]" ng-change="toggle(item._id)">
         <span>{{item.taguser}} | {{item.title}} - {{item.description}} - {{item.createdAt}}</span>
       </p>
     </div>

@@ -10,7 +10,7 @@ app.controller('navController', ['$scope', '$location', 'usersFactory', function
     console.log("Logging out");
     usersFactory.logout(function(){
       console.log("Logged out!");
-      
+
       // alert("logged out!");
       $location.url('/');
     })
@@ -49,6 +49,7 @@ app.controller('dashboardController', ['$scope', '$location', 'usersFactory', 'i
   console.log("dashboardController");
   $scope.user = {}; 
   $scope.users = [];
+  $scope.items = [];
   $scope.newitem = {};
 
   usersFactory.getUser(function(data){
@@ -65,68 +66,48 @@ app.controller('dashboardController', ['$scope', '$location', 'usersFactory', 'i
     }
   })
 
+  itemsFactory.getItems(function(data){
+    if (data.length) {
+      $scope.items = data; 
+    } else {
+      itemsFactory.index(function(data){
+        $scope.items = data; 
+      })
+    }
+  })
+
   $scope.additem = function(){
     console.log($scope.newitem.taguser);
     if (!$scope.newitem.taguser) $scope.newitem.taguser = $scope.user.name;
     console.log("create new item in dashboardController!", $scope.newitem);
     itemsFactory.create($scope.newitem, function(data){
       console.log("returned item: ", data);
-      // $location.url('/');  
-      // $scope.currentuser = data; 
-      // $location.url('/dashboard');
     })
 
   }
 
-
-
-
   console.log($scope.users);
-
-  // $scope.customers = [];
-  // $scope.products = []; 
-  // $scope.orders = []; 
-  
-  // customersFactory.index(function(data){
-  //   $scope.customers = data; 
-  // })
-  // productsFactory.index(function(data){
-  //   $scope.products = data; 
-  // })
-  // ordersFactory.index(function(data){
-  //   $scope.orders = data; 
-  // })
 
 }])
 
 app.controller('profileController', ['$scope', '$location', '$routeParams', 'usersFactory', 'itemsFactory', function($scope, $location, $routeParams, usersFactory, itemsFactory){
   console.log("profileController", $routeParams);
-  $scope.canupdate = false; 
+  $scope.sameuser = false; 
   $scope.loggedinuser = {}; 
   $scope.profileuser = {}; 
-  // $scope.users = [];
   usersFactory.getUser(function(data){
     $scope.loggedinuser = data; 
   })
+  usersFactory.show($routeParams.name, function(data){
+    console.log("data , ", data);
+    $scope.profileuser = data; 
+  })
 
   if ($routeParams.name === $scope.loggedinuser.name) {
-    $scope.canupdate = true; 
-    $scope.profileuser = $scope.loggedinuser; 
-  } else {
-    usersFactory.show($routeParams.name, function(data){
-      console.log("data , ", data);
-      $scope.profileuser = data; 
-    })
-  }
-  // usersFactory.getUsers(function(data){
-  //   if (data.length) {
-  //     $scope.users = data; 
-  //   } else {
-  //     usersFactory.index(function(data){
-  //       $scope.users = data; 
-  //     })
-  //   }
-  // })
+    console.log("Profileuser same as LoggedinUser");
+    $scope.sameuser = true; 
+  } 
+
 
   $scope.toggle = function(id){
     console.log("toggle!");
