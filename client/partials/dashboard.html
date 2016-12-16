@@ -9,4 +9,14 @@
     
     <button class="btn-primary" ng-click="additem()" ng-disabled="productForm.name.$invalid">Add to List</button>
   </form>
+  <br><br><br>
+  <p>Before I die I want to..</p>
+  <div class="container">
+    <!-- <div class="row" ng-repeat="item in items"></div> -->
+  </div>
+  <br>
+  <p>List of other users (Click to view profile):</p>
+  <p ng-repeat="user in users track by $index">
+    <a ng-href="/#!/user/{{user.name}}" value="{{user.name}}" ng-bind="user.name"></a>
+  </p>
 </div>

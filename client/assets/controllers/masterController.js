@@ -44,12 +44,20 @@ app.controller('enterController', ['$scope', '$location', 'usersFactory', functi
 app.controller('dashboardController', ['$scope', '$location', 'usersFactory', 'itemsFactory', function($scope, $location, usersFactory, itemsFactory){
   console.log("dashboardController");
   $scope.user = {}; 
-  // console.log(usersFactory.user);
-  // console.log(usersFactory);
+  $scope.users = [];
   usersFactory.getUser(function(data){
     $scope.user = data; 
   })
-
+  usersFactory.getUsers(function(data){
+    if (data.length) {
+      $scope.users = data; 
+    } else {
+      usersFactory.index(function(data){
+        $scope.users = data; 
+      })
+    }
+  })
+  console.log($scope.users);
 
   // $scope.customers = [];
   // $scope.products = []; 
@@ -64,6 +72,40 @@ app.controller('dashboardController', ['$scope', '$location', 'usersFactory', 'i
   // ordersFactory.index(function(data){
   //   $scope.orders = data; 
   // })
+
+}])
+
+app.controller('profileController', ['$scope', '$location', '$routeParams', 'usersFactory', 'itemsFactory', function($scope, $location, $routeParams, usersFactory, itemsFactory){
+  console.log("profileController", $routeParams);
+  $scope.canupdate = false; 
+  $scope.loggedinuser = {}; 
+  $scope.profileuser = {}; 
+  // $scope.users = [];
+  usersFactory.getUser(function(data){
+    $scope.loggedinuser = data; 
+  })
+
+  if ($routeParams.name === $scope.loggedinuser.name) {
+    $scope.canupdate = true; 
+    $scope.profileuser = $scope.loggedinuser; 
+  } else {
+    usersFactory.show($routeParams.name, function(data){
+      console.log("data , ", data);
+      $scope.profileuser = data; 
+    })
+  }
+  // usersFactory.getUsers(function(data){
+  //   if (data.length) {
+  //     $scope.users = data; 
+  //   } else {
+  //     usersFactory.index(function(data){
+  //       $scope.users = data; 
+  //     })
+  //   }
+  // })
+
+
+  console.log($scope.users);
 
 }])
 

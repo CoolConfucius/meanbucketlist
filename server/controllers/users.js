@@ -79,7 +79,7 @@ function UsersController(){
   };
   this.show = function(req, res){
     console.log(req.params);
-    User.findOne({_id: req.params.id}, function(err, user){
+    User.findOne({name: req.params.name}, function(err, user){
       res.json(user);
     })
   };

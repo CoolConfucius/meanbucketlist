@@ -70,11 +70,11 @@ app.factory('usersFactory', ['$http', function($http){
         } 
       })
     };
-    this.show = function(id, callback){
-      $http.get(`/users/${id}`).then(function(data){
+    this.show = function(name, callback){
+      $http.get(`/users/${name}`).then(function(data){
         console.log("show data: ", data);
-        // user = data; 
-        callback(data.data); 
+        user = data.data; 
+        callback(user); 
       })
     };
     

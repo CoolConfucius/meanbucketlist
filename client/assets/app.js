@@ -10,7 +10,7 @@ app.config(function($routeProvider){
     templateUrl: 'partials/dashboard.html'
   })
 
-  .when('/user/:id', {
+  .when('/user/:name', {
     templateUrl: 'partials/user.html'
   })
 
