@@ -6,7 +6,7 @@ module.exports = function(app){
 
   app.get('/users', users.index)
   app.get('/login/:name', users.login)
-  // app.get('/users/find/:name', users.findOne)
+  
   app.get('/users/:name', users.show)
   // app.get('/users/:id', users.show)
   app.post('/users', users.create)

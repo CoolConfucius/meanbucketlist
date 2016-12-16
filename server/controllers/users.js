@@ -13,12 +13,7 @@ function UsersController(){
     })
   };
 
-  // this.findOne = function(req, res){
-  //   console.log(req.params);
-  //   User.findOne({name: req.params.name}, function(err, user){
-  //     res.json(user);
-  //   })
-  // };
+  
 
   this.login = function(req, res){
     console.log("UsersController Login: ", req.params);
