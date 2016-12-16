@@ -14,5 +14,5 @@ require('./server/config/mongoose.js');
 require('./server/config/routes.js')(app);
 
 app.listen(port, function(){
-  console.log(`minimeanstore server running on port ${ port }`);
+  console.log(`meanbucketlist server running on port ${ port }`);
 })

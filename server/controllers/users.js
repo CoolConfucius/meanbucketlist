@@ -13,17 +13,32 @@ function UsersController(){
     })
   };
 
-  this.login = function(req, res){
+  this.findOne = function(req, res){
     console.log(req.params);
-    User.findOne({_id: req.params.id}, function(err, user){
+    User.findOne({name: req.params.name}, function(err, user){
       res.json(user);
+    })
+  };
+
+  this.login = function(req, res){
+    console.log("UsersController Login: ", req.params);
+    console.log(req.params.name);
+    User.findOne({name: req.params.name}, function(err, user){
+      if (err || !user) {
+        console.log("err or no user: ", err, user);
+        res.json({nouser: true});
+        res.end();
+      } else {
+        console.log("user: ", user);
+        res.json(user);
+      }
     })
   };
 
   this.create = function(req, res){
     console.log("users create: ", req.body);
     var user = new User({
-      name: req.body.username,
+      name: req.body.name,
       _items: [] 
     });
     user.save(function(err, user){

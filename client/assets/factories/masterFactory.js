@@ -1,23 +1,46 @@
 console.log('Master Factory');
 
 app.factory('usersFactory', ['$http', function($http){
+  console.log("usersFactory");
   var users = []; 
   var user = {}; 
   function UsersFactory(){
     var _this = this;
     this.create = function(newuser,callback){
+      console.log("factory creating user");
       $http.post('/users', newuser).then(function(returned_data){
         console.log("returned_data: ", returned_data.data);
         if (typeof(callback) == 'function'){
-          callback(returned_data.data);
+          user = returned_data.data; 
+          users.push(user); 
+          callback(user);
         }
       });
     };
-    this.login = function(id, callback){
-      $http.get(`/users/${id}`).then(function(data){
+    function register(newuser, callback){
+      console.log("factory registering user");
+      $http.post('/users', newuser).then(function(returned_data){
+        console.log("returned_data: ", returned_data.data);
+        if (typeof(callback) == 'function'){
+          user = returned_data.data; 
+          users.push(user); 
+          console.log(users, user);
+          callback(user);
+        }
+      });
+    }
+
+    this.login = function(name, callback){
+      console.log('usersFactory login, ', name);
+      $http.get(`/login/${name}`).then(function(data){
         console.log("login data: ", data);
-        // user = data; 
-        callback(data.data); 
+        if (data.data.nouser) {
+          console.log("No existing user, so create one");
+          register({name: name}, callback);
+        } else {
+          user = data.data; 
+          callback(data.data); 
+        }
       })
     };
     this.update = function(id, edituser, callback){ 

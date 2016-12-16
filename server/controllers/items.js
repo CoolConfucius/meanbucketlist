@@ -10,7 +10,7 @@ function ItemsController(){
     })
   };
   this.create = function(req, res){
-    console.log(req.body);
+    console.log("create item: ", req.body);
     var item = new Item({
       name: req.body.name, 
       description: req.body.description, 

@@ -17,11 +17,26 @@ app.controller('navController', ['$scope', '$location', 'usersFactory', function
 app.controller('enterController', ['$scope', '$location', 'usersFactory', function($scope, $location, usersFactory){
   console.log("enterController");
   $scope.username = '';
-  usersFactory.login($scope.username, function(data){
-    if (true) {
-      $location.url('/dashboard');
-    };
-  })
+
+  $scope.login = function(){
+
+    usersFactory.login($scope.username, function(data){
+      console.log('login data', data);
+      if (!data) {
+        console.log("False login data");
+        console.log("create new user!");
+        usersFactory.create($scope.username, function(data){
+          $location.url('/');  
+        })
+
+
+
+      } else if (true) {
+        // $location.url('/dashboard');
+        $location.url('/');
+      };
+    })
+  }
 
 
 
