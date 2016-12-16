@@ -47,13 +47,13 @@ app.controller('enterController', ['$scope', '$location', 'usersFactory', functi
 
 app.controller('dashboardController', ['$scope', '$location', 'usersFactory', 'itemsFactory', function($scope, $location, usersFactory, itemsFactory){
   console.log("dashboardController");
-  $scope.user = {}; 
+  $scope.loggedinuser = {}; 
   $scope.users = [];
   $scope.items = [];
   $scope.newitem = {};
 
   usersFactory.getUser(function(data){
-    $scope.user = data; 
+    $scope.loggedinuser = data; 
     $scope.newitem.user = data.name; 
   })
   usersFactory.getUsers(function(data){
@@ -78,7 +78,7 @@ app.controller('dashboardController', ['$scope', '$location', 'usersFactory', 'i
 
   $scope.additem = function(){
     console.log($scope.newitem.taguser);
-    if (!$scope.newitem.taguser) $scope.newitem.taguser = $scope.user.name;
+    if (!$scope.newitem.taguser) $scope.newitem.taguser = $scope.loggedinuser.name;
     console.log("create new item in dashboardController!", $scope.newitem);
     itemsFactory.create($scope.newitem, function(data){
       console.log("returned item: ", data);
@@ -87,6 +87,14 @@ app.controller('dashboardController', ['$scope', '$location', 'usersFactory', 'i
   }
 
   console.log($scope.users);
+
+
+  $scope.toggle = function(id){
+    console.log("dashboard toggle!", id);
+    itemsFactory.toggle(id, function(data){
+      console.log("data: ", data);
+    })
+  }
 
 }])
 
@@ -110,11 +118,7 @@ app.controller('profileController', ['$scope', '$location', '$routeParams', 'use
 
 
   $scope.toggle = function(id){
-    console.log("toggle!");
-    console.log(id);
-    // console.log($scope);
-    // console.log($scope.profileuser._items);
-    // console.log($scope.profileuser._items);
+    console.log("toggle!", id);
     itemsFactory.toggle(id, function(data){
       console.log("data: ", data);
       for (var i = $scope.profileuser._items.length - 1; i >= 0; i--) {

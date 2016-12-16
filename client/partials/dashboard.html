@@ -1,5 +1,5 @@
 <div class="container" ng-controller = "dashboardController">
-  <h1>Welcome, {{user.name}}!</h1>
+  <h1>Welcome, {{loggedinuser.name}}!</h1>
   <form name="productForm">
     <input type="text" name='name' placeholder="Title" ng-model="newitem.title" ng-minlength="1" required>
     <input type="text" name='description' placeholder="Description" ng-model="newitem.description" ng-minlength="1">
@@ -13,10 +13,8 @@
   <p>Before I die I want to..</p>
   <div class="container">
     <div class="row" ng-repeat="item in items">
-      <p ng-if="item.done">
-        <input type="checkbox" ng-disabled="(item.taguser !== loggedinuser)" ng-model="newObject[item._id]" ng-change="toggle(item._id)" checked>
+        <input type="checkbox" ng-disabled="(item.taguser !== loggedinuser.name)" ng-model="newObject[item._id]" ng-change="toggle(item._id)">
         <span>{{item.taguser}} | {{item.title}} - {{item.description}} - {{item.createdAt}}</span>
-      </p>
     </div>
   </div>
   <br>
