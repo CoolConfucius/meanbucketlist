@@ -7,9 +7,13 @@ app.controller('navController', ['$scope', '$location', 'usersFactory', function
   $scope.currentuser = {};
 
   $scope.logout = function(){
-    console.log("Logged out!");
-    // alert("logged out!");
-    $location.url('/');
+    console.log("Logging out");
+    usersFactory.logout(function(){
+      console.log("Logged out!");
+      
+      // alert("logged out!");
+      $location.url('/');
+    })
   }
 }])
 

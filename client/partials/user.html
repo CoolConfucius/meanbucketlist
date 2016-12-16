@@ -7,7 +7,7 @@
     <p>Done</p>
     <div class="row" ng-repeat="item in profileuser._items">
       <p ng-if="item.done">
-        <input type="checkbox" value="true" ng-model="newObject['done'+$index]" ng-change="toggle(item._id)">
+        <input type="checkbox" ng-model="newObject[item._id]" ng-change="toggle(item._id)" checked>
         <span>{{item.taguser}} | {{item.title}} - {{item.description}} - {{item.createdAt}}</span>
       </p>
     </div>
@@ -17,42 +17,9 @@
     <p>Pending</p>
     <div class="row" ng-repeat="item in profileuser._items">
       <p ng-if="!item.done">
-        <input type="checkbox" ng-model="newObject['done'+$index]" ng-change="toggle(item._id)">
+        <input type="checkbox" ng-model="newObject[item._id]" ng-change="toggle(item._id)">
         <span>{{item.taguser}} | {{item.title}} - {{item.description}} - {{item.createdAt}}</span>
       </p>
     </div>
   </div>
-<!--   <form action="">
-    Customer 
-    <select ng-model="neworder.customer">
-      <option ng-repeat="customer in customers track by $index" value="{{customer._id}}">{{customer.name}}</option>
-    </select>
-    <br>
-    Order <input type="number" value="1" min="1" max="{{currentmax}}" ng-model="neworder.quantity">
-    <select ng-model="neworder.product" ng-change="change()">
-      <option ng-repeat="product in products track by $index" value="{{product._id}}">{{product.name}}</option>
-    </select>
-    <br>
-    <button class="btn-primary" ng-click="addorder()">Order</button>
-  </form>
-  <input type="search" placeholder="filter..." ng-model='filtername'>
-  
-  <table ng-show="orders.length > 0">
-    <thead>
-      <th>#</th>
-      <th>Customer Name</th>
-      <th>Product</th>
-      <th>Quantity</th>
-      <th>Date</th>
-    </thead>
-    <tbody>
-      <tr ng-repeat="order in orders | filter : filtername track by $index">
-        <td>{{$index}}</td>
-        <td>{{order.customer}}</td>
-        <td>{{order.product}}</td>
-        <td>{{order.quantity}}</td>
-        <td>{{order.createdAt}}</td>
-      </tr>
-    </tbody>
-  </table> -->
 </div>

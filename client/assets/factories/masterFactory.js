@@ -5,18 +5,18 @@ app.factory('usersFactory', ['$http', function($http){
   var users = []; 
   var user = {}; 
   function UsersFactory(){
-    var _this = this;
-    this.create = function(newuser,callback){
-      console.log("factory creating user");
-      $http.post('/users', newuser).then(function(returned_data){
-        console.log("returned_data: ", returned_data.data);
-        if (typeof(callback) == 'function'){
-          user = returned_data.data; 
-          users.push(user); 
-          callback(user);
-        }
-      });
-    };
+    // var _this = this;
+    // this.create = function(newuser,callback){
+    //   console.log("factory creating user");
+    //   $http.post('/users', newuser).then(function(returned_data){
+    //     console.log("returned_data: ", returned_data.data);
+    //     if (typeof(callback) == 'function'){
+    //       user = returned_data.data; 
+    //       users.push(user); 
+    //       callback(user);
+    //     }
+    //   });
+    // };
     function register(newuser, callback){
       console.log("factory registering user");
       $http.post('/users', newuser).then(function(returned_data){
@@ -43,14 +43,22 @@ app.factory('usersFactory', ['$http', function($http){
         }
       })
     };
-    this.update = function(id, edituser, callback){ 
-      $http.put(`/users/${id}`, edituser).then(function(data){
-        console.log(data);
-        if (typeof(callback) == 'function'){
-          callback(data.data);
-        }
-      })
+
+    this.logout = function(callback){
+      console.log('usersFactory logout ');
+      user = {}; 
+      callback();
     };
+
+
+    // this.update = function(id, edituser, callback){ 
+    //   $http.put(`/users/${id}`, edituser).then(function(data){
+    //     console.log(data);
+    //     if (typeof(callback) == 'function'){
+    //       callback(data.data);
+    //     }
+    //   })
+    // };
     this.index = function(callback){
       $http.get('/users').then(function(returned_data){
         console.log(returned_data.data);
