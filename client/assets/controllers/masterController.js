@@ -24,37 +24,56 @@ app.controller('enterController', ['$scope', '$location', 'usersFactory', functi
       console.log('login data', data);
       if (!data) {
         console.log("False login data");
-        console.log("create new user!");
         usersFactory.create($scope.username, function(data){
-          $location.url('/');  
+          console.log("create new user!", data);
+          // $location.url('/');  
+          $scope.currentuser = data; 
+          $location.url('/dashboard');
         })
 
-
-
-      } else if (true) {
-        // $location.url('/dashboard');
-        $location.url('/');
+      } else {
+        $scope.currentuser = data; 
+        $location.url('/dashboard');
+        // $location.url('/');
       };
     })
   }
 
+}])
+
+app.controller('dashboardController', ['$scope', '$location', 'usersFactory', 'itemsFactory', function($scope, $location, usersFactory, itemsFactory){
+  console.log("dashboardController");
+  $scope.user = {}; 
+  // console.log(usersFactory.user);
+  // console.log(usersFactory);
+  usersFactory.getUser(function(data){
+    $scope.user = data; 
+  })
 
 
-  $scope.newcustomer = {};
-  $scope.customers = [];
-
+  // $scope.customers = [];
+  // $scope.products = []; 
+  // $scope.orders = []; 
+  
   // customersFactory.index(function(data){
   //   $scope.customers = data; 
   // })
-  $scope.addcustomer = function(){
-    console.log("addcustomer");
-    customersFactory.create($scope.newcustomer, function(newcustomer){
-      $scope.customers.push(newcustomer);
-      $scope.newcustomer = {}
-    })
-  }
+  // productsFactory.index(function(data){
+  //   $scope.products = data; 
+  // })
+  // ordersFactory.index(function(data){
+  //   $scope.orders = data; 
+  // })
 
 }])
+
+
+
+
+
+
+
+
 
 app.controller('customersController', ['$scope', '$location', 'customersFactory', function($scope, $location, customersFactory){
   console.log("customersController");
@@ -161,20 +180,20 @@ app.controller('ordersController', ['$scope', '$location', 'customersFactory', '
 
 
 
-app.controller('dashboardController', ['$scope', '$location', 'customersFactory', 'productsFactory', 'ordersFactory', function($scope, $location, customersFactory, productsFactory, ordersFactory){
-  console.log("dashboardController");
-  $scope.customers = [];
-  $scope.products = []; 
-  $scope.orders = []; 
+// app.controller('dashboardController', ['$scope', '$location', 'customersFactory', 'productsFactory', 'ordersFactory', function($scope, $location, customersFactory, productsFactory, ordersFactory){
+//   console.log("dashboardController");
+//   $scope.customers = [];
+//   $scope.products = []; 
+//   $scope.orders = []; 
   
-  customersFactory.index(function(data){
-    $scope.customers = data; 
-  })
-  productsFactory.index(function(data){
-    $scope.products = data; 
-  })
-  ordersFactory.index(function(data){
-    $scope.orders = data; 
-  })
+//   customersFactory.index(function(data){
+//     $scope.customers = data; 
+//   })
+//   productsFactory.index(function(data){
+//     $scope.products = data; 
+//   })
+//   ordersFactory.index(function(data){
+//     $scope.orders = data; 
+//   })
 
-}])
+// }])

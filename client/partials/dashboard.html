@@ -1,5 +1,5 @@
 <div class="container" ng-controller = "dashboardController">
-  <h1>Welcome, {{username}}!</h1>
+  <h1>Welcome, {{user.name}}!</h1>
   <form name="productForm">
     <input type="text" name='name' placeholder="Title" ng-model="newitem.title" ng-minlength="1" required>
     <input type="url" name='url' placeholder="Description" ng-model="newitem.description" ng-minlength="1">

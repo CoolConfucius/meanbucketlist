@@ -82,12 +82,77 @@ app.factory('usersFactory', ['$http', function($http){
       callback(users);
     };
     this.getUser = function(callback){
-        callback(user);
+      callback(user);
     };
   }
 
   return new UsersFactory();
 }])
+
+app.factory('itemsFactory', ['$http', function($http){
+  var items = []; 
+  var item = {}; 
+  function ItemsFactory(){
+    var _this = this;
+    this.create = function(newitem,callback){
+      $http.post('/items', newitem).then(function(returned_data){
+        console.log("returned_data: ", returned_data.data);
+        if (typeof(callback) == 'function'){
+          callback(returned_data.data);
+        }
+      });
+    };
+    this.update = function(id, edititem, callback){ 
+      $http.put(`/items/${id}`, edititem).then(function(data){
+        console.log(data);
+        if (typeof(callback) == 'function'){
+          callback(data.data);
+        }
+      })
+    };
+    this.index = function(callback){
+      $http.get('/items').then(function(returned_data){
+        console.log(returned_data.data);
+        items = returned_data.data;
+        callback(items);
+      });
+   //Note: this can be shortened to $http.get('/items').then(callback); 
+   //But only if you only want to run the callback from the controller.
+    };
+    this.delete = function(id, callback){
+      console.log("id: ", id);
+      $http.delete(`/items/${id}`).then(function(data){
+        // for (var i = items.length - 1; i >= 0; i--) {
+        //   if(items[i]._id === id){
+        //     items.splice(i, 1);
+        //     break; 
+        //   }    
+        // };
+        console.log("data", data);
+        if (typeof(callback) == 'function'){
+          callback(data);
+        } 
+      })
+    };
+    this.show = function(id, callback){
+      $http.get(`/items/${id}`).then(function(data){
+        console.log("show data: ", data);
+        // item = data; 
+        callback(data.data); 
+      })
+    };
+    // Sometimes you might not want to make a DB call, and just get the information stored in the factory.
+    this.getItems = function(callback){
+      callback(items);
+    };
+    this.getItem = function(callback){
+        callback(item);
+    };
+  }
+  // console.log(new ItemsFactory());
+  return new ItemsFactory();
+}])
+
 
 
 
