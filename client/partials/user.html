@@ -3,14 +3,24 @@
   {{profileuser}}
   <h3>{{profileuser.name}}'s Bucket List</h3>
   <br>
-  <p>Done</p>
   <div class="continer">
-    <div class="row" ng-repeat="item in items"></div>
+    <p>Done</p>
+    <div class="row" ng-repeat="item in profileuser._items">
+      <p ng-if="item.done">
+        <input type="checkbox" value="true" ng-model="newObject['done'+$index]" ng-change="toggle(item._id)">
+        <span>{{item.taguser}} | {{item.title}} - {{item.description}} - {{item.createdAt}}</span>
+      </p>
+    </div>
   </div>
   <br>
-  <p>Pending</p>
   <div class="continer">
-    <div class="row" ng-repeat="item in items"></div>
+    <p>Pending</p>
+    <div class="row" ng-repeat="item in profileuser._items">
+      <p ng-if="!item.done">
+        <input type="checkbox" ng-model="newObject['done'+$index]" ng-change="toggle(item._id)">
+        <span>{{item.taguser}} | {{item.title}} - {{item.description}} - {{item.createdAt}}</span>
+      </p>
+    </div>
   </div>
 <!--   <form action="">
     Customer 

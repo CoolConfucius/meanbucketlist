@@ -102,6 +102,16 @@ app.factory('itemsFactory', ['$http', function($http){
         }
       });
     };
+
+    this.toggle = function(id, callback){ 
+      $http.put(`/items/${id}`).then(function(data){
+        console.log(data);
+        if (typeof(callback) == 'function'){
+          callback(data.data);
+        }
+      })
+    };
+
     this.update = function(id, edititem, callback){ 
       $http.put(`/items/${id}`, edititem).then(function(data){
         console.log(data);
@@ -110,6 +120,8 @@ app.factory('itemsFactory', ['$http', function($http){
         }
       })
     };
+
+
     this.index = function(callback){
       $http.get('/items').then(function(returned_data){
         console.log(returned_data.data);

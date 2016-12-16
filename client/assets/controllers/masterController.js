@@ -124,8 +124,22 @@ app.controller('profileController', ['$scope', '$location', '$routeParams', 'use
   //   }
   // })
 
-
-  console.log($scope.users);
+  $scope.toggle = function(id){
+    console.log("toggle!");
+    console.log(id);
+    // console.log($scope);
+    // console.log($scope.profileuser._items);
+    // console.log($scope.profileuser._items);
+    itemsFactory.toggle(id, function(data){
+      console.log("data: ", data);
+      for (var i = $scope.profileuser._items.length - 1; i >= 0; i--) {
+        if ($scope.profileuser._items[i]._id === id) {
+          $scope.profileuser._items[i].done = !$scope.profileuser._items[i].done;
+          break; 
+        }
+      }
+    })
+  }
 
 }])
 

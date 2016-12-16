@@ -83,6 +83,22 @@ function ItemsController(){
     })
 
   };
+
+  this.toggle = function(req, res){
+    Item.findOne({_id: req.params.id}, function(err, item){
+      item.done = !item.done; 
+      item.save(function(err, item){
+        if(err){
+          console.log('toggle method saving item err ', err);
+        } else {
+          console.log('successfully toggled an item! ', item);
+          res.json(item);
+        }
+      })    
+    })
+
+  };
+
   this.update = function(req, res){
     var edititem = {
       firstname: req.body.firstname,
