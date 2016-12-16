@@ -2,6 +2,7 @@ console.log('items controller');
 
 var mongoose = require('mongoose');
 var Item = mongoose.model('Item');
+var User = mongoose.model('User');
 
 function ItemsController(){
   this.index = function(req, res){
@@ -12,22 +13,75 @@ function ItemsController(){
   this.create = function(req, res){
     console.log("create item: ", req.body);
     var item = new Item({
-      name: req.body.name, 
+      title: req.body.title, 
       description: req.body.description, 
-      // imageurl: req.body.imageurl, 
-      imageurl: 'http://placehold.it/100x100',
-      quantity: req.body.quantity 
+      user: req.body.user,
+      taguser: req.body.taguser
     });
-    item.save(function(err, item){
-      if(err){
-        console.log(err);
-        console.log('create method saving item');
+
+    User.findOne({name: req.body.user}, function(err, user){
+      if (err || !user) { console.log("user find one err or not found, ", err);}
+      console.log("found user : ", user);
+      if (req.body.user !== req.body.taguser) {
+        User.findOne({name: req.body.taguser}, function(err, taguser){
+          if (err || !taguser) { console.log("taguser find one err or not found, ", err);}
+          console.log("found taguser : ", taguser);
+          user._items.push(item); 
+          taguser._items.push(item); 
+          taguser.save(function(err, taguser){
+            if(err){
+              console.log('err in create method saving taguser', err);
+            } else {
+              console.log('successfully saved a taguser! ', taguser);
+              user.save(function(err, user){
+                if(err){
+                  console.log('err in create method saving user', err);
+                } else {
+                  console.log('successfully saved a user!', user);
+                  item.save(function(err, item){
+                    if(err){
+                      console.log(err);
+                      console.log('create method saving item');
+                    } else {
+                      console.log('successfully added a item!');
+                      console.log(item);
+                      res.json(item);
+                    }
+                  })
+                }
+              })            
+            }
+          })
+        })
+
+
       } else {
-        console.log('successfully added a item!');
-        console.log(item);
-        res.json(item);
+        User.findOne({name: req.body.user}, function(err, taguser){
+          if (err || !user) { console.log("user find one err or not found, ", err);}
+          console.log("found user : ", user);
+          user._items.push(item);  
+          user.save(function(err, user){
+            if(err){
+              console.log('err in create method saving user', err);
+            } else {
+              console.log('successfully saved a user! ', user);
+              item.save(function(err, item){
+                if(err){
+                  console.log(err);
+                  console.log('create method saving item');
+                } else {
+                  console.log('successfully added a item!');
+                  console.log(item);
+                  res.json(item);
+                }
+              })
+            }
+          })
+        })
       }
+
     })
+
   };
   this.update = function(req, res){
     var edititem = {

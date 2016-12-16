@@ -2,12 +2,12 @@
   <h1>Welcome, {{user.name}}!</h1>
   <form name="productForm">
     <input type="text" name='name' placeholder="Title" ng-model="newitem.title" ng-minlength="1" required>
-    <input type="url" name='url' placeholder="Description" ng-model="newitem.description" ng-minlength="1">
+    <input type="text" name='description' placeholder="Description" ng-model="newitem.description" ng-minlength="1">
     <select ng-model="newitem.taguser">
-      <option ng-repeat="user in users track by $index" value="{{user._id}}">{{user.name}}</option>
+      <option ng-repeat="user in users track by $index" value="{{user.name}}">{{user.name}}</option>
     </select>
     
-    <button class="btn-primary" ng-click="additem()" ng-disabled="productForm.name.$invalid">Add to List</button>
+    <button class="btn btn-primary" ng-click="additem()" ng-disabled="productForm.name.$invalid">Add to List</button>
   </form>
   <br><br><br>
   <p>Before I die I want to..</p>

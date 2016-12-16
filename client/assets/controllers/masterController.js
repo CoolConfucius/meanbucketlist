@@ -45,8 +45,11 @@ app.controller('dashboardController', ['$scope', '$location', 'usersFactory', 'i
   console.log("dashboardController");
   $scope.user = {}; 
   $scope.users = [];
+  $scope.newitem = {};
+
   usersFactory.getUser(function(data){
     $scope.user = data; 
+    $scope.newitem.user = data.name; 
   })
   usersFactory.getUsers(function(data){
     if (data.length) {
@@ -57,6 +60,23 @@ app.controller('dashboardController', ['$scope', '$location', 'usersFactory', 'i
       })
     }
   })
+
+  $scope.additem = function(){
+    console.log($scope.newitem.taguser);
+    if (!$scope.newitem.taguser) $scope.newitem.taguser = $scope.user.name;
+    console.log("create new item in dashboardController!", $scope.newitem);
+    itemsFactory.create($scope.newitem, function(data){
+      console.log("returned item: ", data);
+      // $location.url('/');  
+      // $scope.currentuser = data; 
+      // $location.url('/dashboard');
+    })
+
+  }
+
+
+
+
   console.log($scope.users);
 
   // $scope.customers = [];

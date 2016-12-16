@@ -122,12 +122,7 @@ app.factory('itemsFactory', ['$http', function($http){
     this.delete = function(id, callback){
       console.log("id: ", id);
       $http.delete(`/items/${id}`).then(function(data){
-        // for (var i = items.length - 1; i >= 0; i--) {
-        //   if(items[i]._id === id){
-        //     items.splice(i, 1);
-        //     break; 
-        //   }    
-        // };
+
         console.log("data", data);
         if (typeof(callback) == 'function'){
           callback(data);

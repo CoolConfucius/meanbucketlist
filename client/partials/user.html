@@ -2,6 +2,16 @@
   {{loggedinuser}}
   {{profileuser}}
   <h3>{{profileuser.name}}'s Bucket List</h3>
+  <br>
+  <p>Done</p>
+  <div class="continer">
+    <div class="row" ng-repeat="item in items"></div>
+  </div>
+  <br>
+  <p>Pending</p>
+  <div class="continer">
+    <div class="row" ng-repeat="item in items"></div>
+  </div>
 <!--   <form action="">
     Customer 
     <select ng-model="neworder.customer">

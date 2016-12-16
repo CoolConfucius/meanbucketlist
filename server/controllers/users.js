@@ -13,12 +13,12 @@ function UsersController(){
     })
   };
 
-  this.findOne = function(req, res){
-    console.log(req.params);
-    User.findOne({name: req.params.name}, function(err, user){
-      res.json(user);
-    })
-  };
+  // this.findOne = function(req, res){
+  //   console.log(req.params);
+  //   User.findOne({name: req.params.name}, function(err, user){
+  //     res.json(user);
+  //   })
+  // };
 
   this.login = function(req, res){
     console.log("UsersController Login: ", req.params);
@@ -79,7 +79,9 @@ function UsersController(){
   };
   this.show = function(req, res){
     console.log(req.params);
-    User.findOne({name: req.params.name}, function(err, user){
+    User.findOne({name: req.params.name})
+    .populate('_items')
+    .exec(function(err, user){
       res.json(user);
     })
   };
